@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +22,7 @@ use App\Http\Controllers\UserController;
 
 
 //Users routes
-// ->middleware('auth:api');
+
 
 Route::post('v1/users/login',[LoginController::class, 'login']);
 
@@ -32,4 +33,6 @@ Route::post('v1/users/forgotpass',[UserController::class,'forgotPasswordAction']
 Route::delete('v1/users/deletereset',[UserController::class,'deletePasswordResetToken']);
 
 
+//Product Routes
 
+Route::post('v1/products/add',[ProductController::class,'addProduct']);
