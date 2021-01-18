@@ -36,3 +36,7 @@ Route::delete('v1/users/deletereset',[UserController::class,'deletePasswordReset
 //Product Routes
 
 Route::post('v1/products/add',[ProductController::class,'addProduct']);
+
+Route::get('v1/products/all',[ProductController::class,'allProducts']);
+
+Route::delete('v1/products/delete',[ProductController::class,'deleteProduct']);

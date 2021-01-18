@@ -19,4 +19,18 @@ class ProductController extends Controller
 
         return response(['product' => $product],201);
     }
+
+    public function allProducts(Request $request){
+        $products = Product::all();
+
+        return response(['products' => $products]);
+    }
+
+    public function deleteProduct(Request $request){
+        
+        $id = $request->id; 
+        $deleted_product = Product::where('id',$id)->delete();
+
+        return response(['deleted' => $deleted_product]);
+    }
 }
