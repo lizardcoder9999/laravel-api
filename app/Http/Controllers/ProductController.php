@@ -26,11 +26,26 @@ class ProductController extends Controller
         return response(['products' => $products]);
     }
 
-    public function deleteProduct(Request $request){
-        
-        $id = $request->id; 
+    public function deleteProduct(Request $request,$id){
+       
         $deleted_product = Product::where('id',$id)->delete();
 
         return response(['deleted' => $deleted_product]);
+    }
+
+    public function updateProduct(Request $request , $id){
+
+        $updated_product = $request->validate([
+            'product_name' => 'required|string',
+            'product_desc' => 'required|string',
+            'product_category' => 'required|string',
+            'product_image' => 'required|string'
+        ]);
+
+        Product::where('id',$id)->update($updated_product);
+
+        return response(['updated'=>$updated_product]);
+
+
     }
 }

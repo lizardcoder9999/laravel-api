@@ -39,4 +39,6 @@ Route::post('v1/products/add',[ProductController::class,'addProduct']);
 
 Route::get('v1/products/all',[ProductController::class,'allProducts']);
 
-Route::delete('v1/products/delete',[ProductController::class,'deleteProduct']);
+Route::delete('v1/products/delete/{id}',[ProductController::class,'deleteProduct']);
+
+Route::put('v1/products/update/{id}',[ProductController::class,'updateProduct']);
