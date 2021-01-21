@@ -19,12 +19,34 @@ class UserController extends Controller
             'token' => $request->token,
         ];
 
+        $email = User::where('email', $forgotPassword['email']);
 
-        $forgotPassword['token'] = bcrypt($forgotPassword['token']);
+        if($email != null) {
+
+
+            $forgotPassword['token'] = bcrypt($forgotPassword['token']);
+            $user_reset = password_reset::create($forgotPassword);
+            $link = "http://localhost:4200/reset-password/".$request->token;
+
+            Mail::raw('Hello this is the password reset email you requested ' + ' ' + $link, function ($message) {
+                $message->from('site@domain.com', 'Site');
+                $message->sender('site@domain.com', 'Website');
+                $message->to($forgotPassword['email'] , 'John Doe');
+                $message->subject('Password Reset Request');
+                
+            });
+
+            return response(['user_reset'=>$user_reset]);
+
+        }else{
+            return response(['message'=>'Email dosent exist']);
+        }
+
         
-        $user_reset = password_reset::create($forgotPassword);
+        
+        
 
-        return response(['user_reset'=>$user_reset]);
+        
     
     }
 

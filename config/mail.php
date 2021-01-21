@@ -47,10 +47,13 @@ return [
 
         'ses' => [
             'transport' => 'ses',
+            
         ],
 
         'mailgun' => [
             'transport' => 'mailgun',
+            'domain' => env('MAIL_DOMAIN'),
+		    'secret' => env('MAILGUN_API_KEY'),
         ],
 
         'postmark' => [
