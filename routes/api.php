@@ -42,3 +42,9 @@ Route::get('v1/products/all',[ProductController::class,'allProducts']);
 Route::delete('v1/products/delete/{id}',[ProductController::class,'deleteProduct']);
 
 Route::put('v1/products/update/{id}',[ProductController::class,'updateProduct']);
+
+
+// Verification Route 
+
+Route::get('v1/verify/access',[UserController::class, 'verifyRouteAccess'])->middleware("auth:api");
+

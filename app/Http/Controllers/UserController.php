@@ -57,4 +57,11 @@ class UserController extends Controller
         return response(['deleted'=>$deleted]);
     }
 
+    public function verifyRouteAccess(Request $request){
+        return response(["message" => "authorized"]);
+    }
+
+
+
+
 }
