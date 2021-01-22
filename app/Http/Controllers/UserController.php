@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\password_reset;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -19,7 +20,11 @@ class UserController extends Controller
             'token' => $request->token,
         ];
 
+        
+
         $email = User::where('email', $forgotPassword['email']);
+        
+        $reqEmail = $request->email;
 
         if($email != null) {
 
@@ -28,10 +33,10 @@ class UserController extends Controller
             $user_reset = password_reset::create($forgotPassword);
             $link = "http://localhost:4200/reset-password/".$request->token;
 
-            Mail::raw('Hello this is the password reset email you requested ' + ' ' + $link, function ($message) {
+            Mail::raw('Hello this is the password reset email you requested ' . ' ' . $link, function ($message) use ($reqEmail) {
                 $message->from('site@domain.com', 'Site');
                 $message->sender('site@domain.com', 'Website');
-                $message->to($forgotPassword['email'] , 'John Doe');
+                $message->to($reqEmail, 'John Doe');
                 $message->subject('Password Reset Request');
                 
             });
