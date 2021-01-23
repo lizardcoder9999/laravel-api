@@ -48,4 +48,9 @@ Route::put('v1/products/update/{id}',[ProductController::class,'updateProduct'])
 
 Route::get('v1/verify/access',[UserController::class, 'verifyRouteAccess'])->middleware("auth:api");
 
-Route::get('v1/verify/reset/access',[UserController::class,'verifyResetPageAccess']);
+Route::post('v1/verify/reset/access',[UserController::class,'verifyResetPageAccess']);
+
+
+// Password update route
+
+Route::put('v1/reset/password/update',[UserController::class,'updatePassword']);

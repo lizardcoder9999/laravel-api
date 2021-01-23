@@ -95,6 +95,24 @@ class UserController extends Controller
     }
 
 
+    public function updatePassword(Request $request){
+
+        $email = $request->email;
+        $password = $request->password;
+        $hashedPass = Hash::make($password);
+
+        $exists = User::where('email',$email);
+
+        if($exists === null){
+            return  response(['message'=>'Email dosent exists'],404);
+        }else{
+            User::where('email',$email)->update(['password' => $hashedPass]);
+        }
+
+
+    }
+
+
 
 
 }
