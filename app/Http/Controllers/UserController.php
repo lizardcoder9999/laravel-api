@@ -31,9 +31,7 @@ class UserController extends Controller
 
 
             // $forgotPassword['token'] = bcrypt($forgotPassword['token']);
-            $forgotPassword['token'] = Hash::make('password', [
-                'rounds' => 12,
-            ]);
+            $forgotPassword['token'] = Hash::make($forgotPassword['token']);
             $user_reset = password_reset::create($forgotPassword);
             $link = "http://localhost:4200/reset-password/".$request->token;
 
@@ -75,7 +73,6 @@ class UserController extends Controller
         $email = $request->email; 
         $token = $request->token;
 
-        // $exists = password_reset::where('email', $email)->get();
         $exists = DB::table('password_resets')->where('email',$email);
         
 
@@ -83,16 +80,16 @@ class UserController extends Controller
             return response(['message'=>'unauthorized'],401);
             
         }else{
-          $dbToken = $exists->select('token')->get();
+          $dbToken = DB::table('password_resets')->where('email',$email)->pluck('token');
         
-          return response(['message'=>$request]);
         
-        //   if(Hash::check($token, $dbToken->token))  {
-        //       return response(['message'=>'authorized']);
-        //   }else{
-        //       return response(['message'=>'error occured'],401);
-        //   }
-         
+          if (Hash::check($token,$dbToken[0])) {
+            return response(['message'=>'authorized']);
+        }else{
+              return response(['message'=>'unauthorized'],401);
+          }
+
+        
         }
 
     }
