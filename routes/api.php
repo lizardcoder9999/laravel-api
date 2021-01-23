@@ -48,3 +48,4 @@ Route::put('v1/products/update/{id}',[ProductController::class,'updateProduct'])
 
 Route::get('v1/verify/access',[UserController::class, 'verifyRouteAccess'])->middleware("auth:api");
 
+Route::get('v1/verify/reset/access',[UserController::class,'verifyResetPageAccess']);
