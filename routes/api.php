@@ -30,7 +30,7 @@ Route::post('v1/users/register',[RegisterController::class,'register']);
 
 Route::post('v1/users/forgotpass',[UserController::class,'forgotPasswordAction']);
 
-Route::delete('v1/users/deletereset',[UserController::class,'deletePasswordResetToken']);
+Route::delete('v1/users/deletereset/{email}',[UserController::class,'deletePasswordResetToken']);
 
 
 //Product Routes

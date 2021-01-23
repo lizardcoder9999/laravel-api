@@ -29,8 +29,6 @@ class UserController extends Controller
 
         if($email != null) {
 
-
-            // $forgotPassword['token'] = bcrypt($forgotPassword['token']);
             $forgotPassword['token'] = Hash::make($forgotPassword['token']);
             $user_reset = password_reset::create($forgotPassword);
             $link = "http://localhost:4200/reset-password/".$request->token;
@@ -57,8 +55,8 @@ class UserController extends Controller
     
     }
 
-    public function deletePasswordResetToken(Request $request){
-        $email = $request->email;
+    public function deletePasswordResetToken(Request $request, $email){
+    
         $deleted = password_reset::where('email',$email)->delete();
         $deleteTrashed = password_reset::onlyTrashed()->where('email',$email)->forceDelete();
       
@@ -100,13 +98,20 @@ class UserController extends Controller
         $email = $request->email;
         $password = $request->password;
         $hashedPass = Hash::make($password);
-
-        $exists = User::where('email',$email);
+        $token = $request->token;
+        $exists = DB::table('password_resets')->where('email',$email);
 
         if($exists === null){
             return  response(['message'=>'Email dosent exists'],404);
         }else{
-            User::where('email',$email)->update(['password' => $hashedPass]);
+            $dbToken = DB::table('password_resets')->where('email',$email)->pluck('token');
+            if (Hash::check($token,$dbToken[0])) {
+                User::where('email',$email)->update(['password' => $hashedPass]);
+                return response(['message'=>'updated'],204);
+            }else{
+                return response(['message'=>'unauthorized',401]);
+            }
+            
         }
 
 
