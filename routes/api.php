@@ -6,6 +6,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +52,10 @@ Route::get('v1/verify/access',[UserController::class, 'verifyRouteAccess'])->mid
 Route::post('v1/verify/reset/access',[UserController::class,'verifyResetPageAccess']);
 
 
-// Password update route
+// Password update Route
 
 Route::put('v1/reset/password/update',[UserController::class,'updatePassword']);
+
+// Profile Routes
+
+Route::post("v1/users/profile/{email}", [ProfileController::class,'getByEmail'])->middleware("auth:api");
