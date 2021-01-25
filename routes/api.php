@@ -58,4 +58,4 @@ Route::put('v1/reset/password/update',[UserController::class,'updatePassword']);
 
 // Profile Routes
 
-Route::get("v1/users/profile/{email}", [ProfileController::class,'getByEmail'])->middleware("auth:api");
+Route::post("v1/users/profile/{email}", [ProfileController::class,'getByEmail'])->middleware("auth:api");
