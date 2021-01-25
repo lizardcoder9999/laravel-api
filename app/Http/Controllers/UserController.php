@@ -46,13 +46,6 @@ class UserController extends Controller
         }else{
             return response(['message'=>'Email dosent exist']);
         }
-
-        
-        
-        
-
-        
-    
     }
 
     public function deletePasswordResetToken(Request $request, $email){
