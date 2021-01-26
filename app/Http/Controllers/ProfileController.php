@@ -12,4 +12,23 @@ class ProfileController extends Controller
 
         return response([$user]);
     }
+
+    public function updateByEmail(Request $request, $email){
+
+        $updateduser = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|unique:users|max:255',
+            'password' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'state' => 'required|string|max:255',
+            'zipcode' => 'required|string|max:255',
+            'country' => 'required|string|max:255',
+        ]);
+
+        User::where('email',$email)->update($updateduser);
+
+        return response([$updateduser]);
+    }
 }
+
