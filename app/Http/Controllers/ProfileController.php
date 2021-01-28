@@ -17,8 +17,8 @@ class ProfileController extends Controller
 
         $updateduser = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|unique:users|max:255',
-            'password' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255',
+            'password' => 'string|max:255',
             'address' => 'required|string|max:255',
             'city' => 'required|string|max:255',
             'state' => 'required|string|max:255',
